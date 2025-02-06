@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/v4lomyr/POSIX-shell/internal/parser"
 	"os"
+	"strings"
 )
 
 var _ = fmt.Fprint
@@ -17,7 +19,12 @@ func main() {
 			fmt.Fprintln(os.Stderr, "Error reading input:", err)
 			os.Exit(1)
 		}
+		cmd = strings.TrimSpace(cmd)
 
-		fmt.Fprintln(os.Stdout, cmd[:len(cmd)-1]+": command not found")
+		switch {
+		case parser.Exit(cmd):
+		default:
+			fmt.Fprintln(os.Stdout, cmd[:len(cmd)-1]+": command not found")
+		}
 	}
 }
