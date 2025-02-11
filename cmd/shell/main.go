@@ -25,6 +25,7 @@ func main() {
 		switch {
 		case parser.Exit(cmd):
 		case parser.Echo(cmd):
+		case parser.Type(cmd):
 		default:
 			fmt.Fprintln(os.Stdout, cmd+": command not found")
 		}
