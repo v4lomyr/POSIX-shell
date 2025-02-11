@@ -1,24 +1,23 @@
 package parser
 
 import (
+	"fmt"
 	"os"
 	"regexp"
-	"strconv"
 )
 
-func Exit(cmd string) bool {
-	re := regexp.MustCompile(`^exit(?: (\d+))?$`)
+func Echo(cmd string) bool {
+	re := regexp.MustCompile(`^echo(?:\s+(.*))?$`)
 	if !re.MatchString(cmd) {
 		return false
 	}
 
 	matches := re.FindStringSubmatch(cmd)
-	exitCode := 0
+	text := ""
 	if len(matches) > 0 {
-		exitCode, _ = strconv.Atoi(matches[1])
+		text = matches[len(matches)-1]
+		fmt.Fprintln(os.Stdout, text)
 	}
-
-	os.Exit(exitCode)
 
 	return true
 }
